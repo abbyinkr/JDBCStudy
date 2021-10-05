@@ -1,0 +1,160 @@
+package com.test;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class ScoreProcess
+{
+	private ScoreDAO dao;
+	
+	public ScoreProcess() throws ClassNotFoundException, SQLException
+	{
+		dao.getConnection();
+	}
+	
+	// 성적 입력기능
+	public void sungjukInsert()
+	{
+		Scanner sc = new Scanner(System.in);
+		
+		try
+		{
+			int count = dao.count();
+			System.out.printf("%d번 학생 성적 입력(이름 국어 영어 수학) : " , (++count));
+			String name = sc.next();
+			int kor = sc.nextInt();
+			int eng = sc.nextInt();
+			int mat = sc.nextInt();
+			
+			ScoreDTO dto = new ScoreDTO();
+			
+			dto.setName(name);
+			dto.setKor(kor);
+			dto.setEng(eng);
+			dto.setMat(mat);
+			
+			dao.add(dto);
+			
+		} catch (Exception e)
+		{	
+			System.out.println(e.toString());
+		}
+		finally 
+		{
+			try
+			{
+				dao.close();
+				
+			} catch (Exception e2)
+			{
+				System.out.println(e2.toString());
+			}
+		}
+		
+	}
+
+	
+	// 성적 전체 출력 기능
+	public void sungjukLists()
+	{
+		int count = dao.count();
+		
+		System.out.println();
+		System.out.printf("전체 인원: %d명\n", count);
+		System.out.println("번호   이름   국어   영어   수학   총점   평균   석차");
+		
+		try
+		{
+			ArrayList<ScoreDTO> arrayLists = dao.lists();
+			
+			for (ScoreDTO dto : arrayLists)
+			{
+				System.out.printf("%4d %5s %5d %5d %5d %5d %5d %5d\n", dto.getSid(), dto.getName()
+						          , dto.getKor(), dto.getEng(), dto.getMat()
+						          , dto.getTot(), dto.getAvg(), dto.getRank() );
+			
+			}
+			
+		} catch (Exception e)
+		{
+			System.out.println(e.toString());
+		}
+		finally
+		{
+			try
+			{
+				dao.close();
+				
+			} catch (Exception e2)
+			{
+				System.out.println(e2.toString());
+			}
+			
+		}
+		
+	}
+
+	
+	
+	// 이름 검색 출력 기능
+	public void searchName()
+	{
+		Scanner sc = new Scanner(System.in);
+
+		
+		try
+		{
+			System.out.print("검색할 이름 입력 : ");
+			String name = sc.next();
+			
+			int count = dao.count(name);
+			
+			System.out.println();
+			System.out.printf("검색 인원: %d명\n", count);
+			System.out.println("번호   이름   국어   영어   수학   총점   평균   석차");
+			
+			ArrayList<ScoreDTO> arrayLists = dao.lists(name);
+			
+			for (ScoreDTO dto : arrayLists)
+			{
+				System.out.printf("%4d %5s %5d %5d %5d %5d %5d %5d\n", dto.getSid(), dto.getName()
+						          , dto.getKor(), dto.getEng(), dto.getMat()
+						          , dto.getTot(), dto.getAvg(), dto.getRank() );
+			
+			}
+			
+		} catch (Exception e)
+		{
+			System.out.println(e.toString());
+		}
+		finally
+		{
+			try
+			{
+				dao.close();
+				
+			} catch (Exception e2)
+			{
+				System.out.println(e2.toString());
+			}
+			
+		}
+		
+	}
+	
+	
+	// 성적 수정 기능
+	
+	// 성적 삭제 기능
+	
+	
+}
+
+/*
+1. 성적 입력
+2. 성적 전체 출력
+3. 이름 검색 출력
+4. 성적 수정
+5. 성적 삭제
+*/

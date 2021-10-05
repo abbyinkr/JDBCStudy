@@ -1,0 +1,101 @@
+/*============================================
+  MemberProcess.java 
+  - 콘솔 기반 서브 메뉴 입출력 전용 클래스
+============================================*/
+
+// 메뉴에서 클릭하면 구현되는 기능들은 Process 클래스에서 정의한다.
+
+package com.test;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class MemberProcess
+{
+	// MemberDAO 클래스 변수로 선언
+	private MemberDAO dao;
+	
+	// 생성자에서 MemberDAO 인스턴스 생성
+	public MemberProcess()
+	{
+		dao = new MemberDAO();
+	}
+	
+	// 직원 정보 입력 메소드 정의
+	public void memberInsert()
+	{
+		
+		Scanner sc = new Scanner(System.in);
+		
+		try
+		{
+			// 데이터베이스 연결
+			dao.connection();
+			
+			// 지역리스트 구성
+			ArrayList<String> citys = dao.searchCity();
+			StringBuilder cityStr = new StringBuilder();
+			for (String city : citys)
+				cityStr.append(city+"/");
+			// 부서리스트 구성
+			ArrayList<String> buseos = dao.searchBuseo();
+			StringBuilder buseoStr = new StringBuilder();
+			for (String buseo : buseos)
+				buseoStr.append(buseo+"/");
+			// 직위리스트 구성
+			ArrayList<String> jikwis = dao.searchJikwi();
+			StringBuilder jikwiStr = new StringBuilder();
+			for (String jikwi : jikwis)
+				jikwiStr.append(jikwi+"/");
+			
+			
+			
+			
+			
+		} catch (Exception e)
+		{
+			System.out.println(e.toString());
+		}
+		
+	
+	}//end memberInsert()
+	
+	// 직원 전체 출력 메소드 정의
+	public void memberLists()
+	{
+		
+		
+	}//end memberLists()
+	
+	// 직원 검색 출력 메소드 정의
+	public void memberSearch()
+	{
+		
+		
+	}//end memberSearch()
+	
+	// 직원 정보 수정 메소드 정의
+	public void memberUpdate()
+	{
+		
+		
+	}//end memberUpdate()
+	
+	// 직원 정보 삭제 메소드 정의
+	public void memberDelete()
+	{
+		
+		
+		
+	}//end memberDelete()
+
+}
+
+
+
+
+
+
+
+
+

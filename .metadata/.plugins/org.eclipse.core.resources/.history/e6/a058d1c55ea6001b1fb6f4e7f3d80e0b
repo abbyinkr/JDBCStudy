@@ -1,0 +1,48 @@
+/*=====================================================
+   Test002.java
+   - CallableStatement 를 활용한 SQL 구문 전송 실습 2
+=====================================================*/
+
+package com.test;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+
+import com.util.DBConn;
+
+public class Test002
+{
+	public static void main(String[] args)
+	{
+		try
+		{
+			Connection conn = DBConn.getConnection();
+			
+			if (conn != null)
+			{	
+				System.out.println("데이터베이스 연결 성공~!!!");
+				
+				try
+				{
+					String sql = "{call PRC_MEMBERSELECT(?)}";
+					CallableStatement cstmt = conn.prepareCall(sql);
+					
+					// check~!!
+					// 프로시저 내부에서 SYS_REFCURSOR 를 사용하기 있기 때문에
+					// OracleTypes.CURSOR 를 사용하기 위해 등록 과정이 필요한 상황
+					// 1. Project Explorer 상에서 
+					
+				} catch (Exception e)
+				{
+					System.out.println(e.toString());
+				}
+				
+			}
+			
+		} catch (Exception e)
+		{
+			System.out.println(e.toString());
+		}
+	}
+
+}

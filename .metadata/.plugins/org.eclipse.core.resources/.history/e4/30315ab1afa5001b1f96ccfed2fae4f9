@@ -1,0 +1,13 @@
+package com.test;
+
+public class MemberDTO
+{
+	// 주요 속성 구성
+	//사번  이름  주민번호  입사일  지역  전화번호
+	//부서  직위  기본급  수당  급여
+	private int empId, basicPay, sudang, pay;
+	private String empName, ssn, ibsaDate, cityLoc, tel, buseoName, jikwiName;
+	
+
+	
+}

@@ -1,0 +1,79 @@
+package com.test;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.util.DBConn;
+
+public class ScoreDAO
+{
+	private Connection conn;
+	
+	public Connection getConnection() throws ClassNotFoundException, SQLException
+	{
+		conn = DBConn.getConnection();
+		return conn;
+	}
+	
+	// 전체 인원수 조회 메소드
+	public int count()
+	{
+		int result=0;
+		
+		return result;
+		
+	}
+	
+	// 성적 데이터 입력 메소드
+	public int add(ScoreDTO dto)
+	{
+		int result=0;
+		
+		
+		return result;
+		
+	}
+
+	// 성적 데이터 전체 출력
+	public ArrayList<ScoreDTO> lists()
+	{
+		ArrayList<ScoreDTO> result = new ArrayList<ScoreDTO>;
+		
+		
+		return result;
+		
+	}
+	
+	// 이름 검색 출력
+	public ArrayList<ScoreDTO> lists(String name)
+	{
+		ArrayList<ScoreDTO> result = new ArrayList<ScoreDTO>;
+		
+		
+		return result;
+		
+	}
+	
+	
+	// 성적 수정
+	public int modify(ScoreDTO dto)
+	{
+		int result=0;
+		
+		return result;
+		
+	}
+	
+	// 성적 삭제
+	public int remove(int sid)
+	{
+		int result=0;
+		
+		return result;
+		
+	}
+	
+	
+	
+}

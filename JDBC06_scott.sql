@@ -1,0 +1,37 @@
+SELECT USER
+FROM DUAL;
+--==>> SCOTT
+
+SELECT *
+FROM TBL_MEMBER;
+
+TRUNCATE TABLE TBL_MEMBER;
+--==>> Table TBL_MEMBER이(가) 잘렸습니다.
+
+DROP SEQUENCE MEMBERSEQ;
+--==>> Sequence MEMBERSEQ이(가) 삭제되었습니다.
+
+CREATE SEQUENCE MEMBERSEQ
+NOCACHE;
+--==>> Sequence MEMBERSEQ이(가) 생성되었습니다.
+
+--○ 데이터 입력 쿼리문 구성
+INSERT INTO TBL_MEMBER(SID, NAME,TEL)
+VALUES(MEMBERSEQ.NEXTVAL, '한혜림', '010-1111-1111');
+--> 한 줄 구성
+INSERT INTO TBL_MEMBER(SID, NAME,TEL) VALUES(MEMBERSEQ.NEXTVAL, '한혜림', '010-1111-1111')
+;
+--==>> 1 행 이(가) 삽입되었습니다.
+
+--○ 커밋
+COMMIT;
+--==>> 커밋 완료.
+SELECT *
+FROM TBL_MEMBER;
+--==>>
+/*
+2	전혜림	010-2222-2222
+3	장서현	010-3333-3333
+1	한혜림	010-1111-1111
+*/
+

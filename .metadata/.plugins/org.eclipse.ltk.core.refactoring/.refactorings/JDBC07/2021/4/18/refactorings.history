@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;arrayLists&apos; in &apos;com.test.ScoreProcess.searchName()&apos; to &apos;arrayList&apos;&#x0D;&#x0A;- Original project: &apos;JDBC07&apos;&#x0D;&#x0A;- Original element: &apos;com.test.ScoreProcess.searchName().arrayLists&apos;&#x0D;&#x0A;- Renamed element: &apos;arrayLists&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;arrayLists&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;com.test{ScoreProcess.java[ScoreProcess~searchName@arrayLists!2187!2235!2207!2216!QArrayList\&lt;QScoreDTO;&gt;;!0!false" name="arrayList" references="true" stamp="1619406605368" version="1.0"/>
+</session>
