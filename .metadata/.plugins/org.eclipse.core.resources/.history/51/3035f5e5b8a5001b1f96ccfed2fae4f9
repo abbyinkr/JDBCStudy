@@ -1,0 +1,208 @@
+package com.test;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import com.util.DBConn;
+
+public class MemberDAO
+{
+	private Connection conn;
+	
+	// 데이터베이스 연결 메소드
+	public Connection connection()
+	{
+		conn = DBConn.getConnection();
+		return conn;
+	}
+	
+	
+	// 데이터 입력 담당 메소드
+	public int add(MemberDTO dto) throws SQLException
+	{	
+		int result = 0;
+		
+		// 작업객체 생성
+		Statement stmt = conn.createStatement();
+		
+		// 쿼리문 구성
+		String sql = String.format("INSERT INTO TBL_EMP (EMP_ID, EMP_NAME, SSN, IBSADATE"
+				+ ", CITY_ID, TEL, BUSEO_ID, JIKWI_ID, BASICPAY, SUDANG)"
+				+ " VALUES (EMPSEQ.NEXTVAL, '%s', '%s', TO_DATE('%s', 'YYYY-MM-DD')"
+				+ ", (SELECT CITY_ID FROM TBL_CITY WHERE CITY_LOC='%s')"
+				+ ", '%s'"
+				+ ", (SELECT BUSEO_ID FROM TBL_BUSEO WHERE BUSEO_NAME='%s')"
+				+ ", (SELECT JIKWI_ID FROM TBL_JIKWI WHERE JIKWI_NAME='%s')"
+				+ ", 850000, 2000000)", ;
+		
+		// 쿼리문 수행
+		result = stmt.executeUpdate(sql);
+		
+		if (result > 0)
+		{
+			System.out.println(">> 데이터 입력이 완료되었습니다.");
+		}
+		
+		// 리소스 반납
+		stmt.close();
+		
+		// 연결 종료
+		return result;
+	}
+	
+	// 전체 직원수 카운트 메소드
+	public int count() throws SQLException
+	{
+		int count=0;
+		
+		Statement stmt = conn.createStatement();
+		
+		String sql = "SELECT COUNT(*) AS COUNT FROM TBL_EMP";
+		
+		ResultSet rs = stmt.executeQuery(sql);
+		
+		if (rs.next())
+			count = rs.getInt("COUNT");
+		
+		rs.close();
+		stmt.close();
+		
+		return count;
+		
+	}
+	
+	
+	// 전체 리스트 출력 담당 메소드(사번/이름/부서/직위/ 급여 내림차) → select 
+	public ArrayList<MemberDTO> lists() throws SQLException 
+	{
+		ArrayList<MemberDTO> arrayList = new ArrayList<MemberDTO>();
+		
+		// 작업 객체 생성
+		Statement stmt = conn.createStatement();
+		
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("리스트 정렬 방법 선택(1~5 선택) : ");
+		int answer = sc.nextInt();
+		
+		String sql;
+		
+		switch (answer)
+		{ 
+			// 사번/이름/부서/직위/ 급여 내림차
+			case 1: sql = "SELECT * FROM EMPVIEW ORDER BY EMP_ID"; break;
+			case 2: sql = "SELECT * FROM EMPVIEW ORDER BY EMP_NAME"; break;
+			case 3: sql = "SELECT * FROM EMPVIEW ORDER BY BUSEO_NAME"; break;
+			case 4: sql = "SELECT * FROM EMPVIEW ORDER BY JIKWI_NAME"; break;
+			case 5: sql = "SELECT * FROM EMPVIEW ORDER BY PAY DESC"; break;
+			
+		  default: sql = "SELECT * FROM EMPVIEW ORDER BY EMP_ID";
+		}	
+
+		// 쿼리문 수행
+		ResultSet rs = stmt.executeQuery(sql);
+		
+		// ResultSet 처리 → 반복문 → MemberDTO 인스턴스 생성 → ArrayList에 적재
+		while (rs.next())
+		{
+			MemberDTO dto = new MemberDTO();
+			
+			// 변수들 다시 생각해보기 -- 급여..이런거 넣어야되나?
+			dto.setEmp_name(rs.getString("EMP_NAME"));
+			dto.setCity_id(rs.getInt("CITY_ID"));
+			dto.setBuseo_id(rs.getInt("BUSEO_ID"));
+			dto.setJikwi_id(rs.getInt("JIKWI_ID"));
+			dto.setBasicpay(rs.getInt("BASICPAY"));
+			dto.setSudang(rs.getInt("SUDANG"));
+			dto.setEmp_name(rs.getString("EMP_NAME"));
+			dto.setSsn(rs.getString("SSN"));
+			dto.setTel(rs.getString("TEL"));
+			dto.setIbsadate(rs.getString("IBSADATE")); 
+			
+			arrayList.add(dto);
+		}
+		rs.close();
+		stmt.close();
+
+		return arrayList;
+	}//end lists() - 사번정렬
+
+	
+	// 직원 검색 출력 메소드(사번/이름/부서/직위)
+	// 사번
+	public ArrayList<MemberDTO> lists_num(int emp_id) throws SQLException 
+	{
+		ArrayList<MemberDTO> arrayList = new ArrayList<MemberDTO>();
+		
+		// 작업 객체 생성
+		Statement stmt = conn.createStatement();
+		
+		// 쿼리문 구성
+		String sql = String.format("SELECT * FROM EMPVIEW WHERE EMP_ID = %d", emp_id);
+		
+		// 쿼리문 수행
+		ResultSet rs = stmt.executeQuery(sql);
+		
+		// ResultSet 처리 - 반복문 - DTO 인스턴스 생성 - arrayList에 적재
+		
+		while (rs.next())
+		{
+			MemberDTO dto = new MemberDTO();
+			
+			
+		}
+		
+		// 리소스 반납
+		
+		
+		return arrayList;
+	}
+	
+	// 이름
+	public ArrayList<MemberDTO> lists_name(String name) 
+	{
+		ArrayList<MemberDTO> arrayList = new ArrayList<MemberDTO>();
+		
+		return arrayList;
+	}
+	
+	// 부서
+	public ArrayList<MemberDTO> lists_buseo(String buseo_name) 
+	{
+		ArrayList<MemberDTO> arrayList = new ArrayList<MemberDTO>();
+		
+		return arrayList;
+	}
+	
+	// 직위
+	public ArrayList<MemberDTO> lists_jikwi(String jikwi_name) 
+	{
+		ArrayList<MemberDTO> arrayList = new ArrayList<MemberDTO>();
+		
+		return arrayList;
+	}
+	
+	// 직원 정보 수정 메소드 → update
+	public int jikwonUpdate(MemberDTO dto)
+	{
+		int result=0;
+		
+		return result;
+	}
+	
+	
+	// 직원 정보 삭제 메소드 → delete
+	public int jikwonDelete(int emp_id)
+	{
+		int result=0;
+		
+		return result;
+		
+	}
+	
+
+}
